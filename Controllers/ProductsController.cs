@@ -99,10 +99,10 @@ namespace MvcDebuggingExam.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(int productId)
+        public IActionResult Delete(int id)
         {
-            var product = products.FirstOrDefault(p => p.Id == productId);
-            if (product == null)
+            var product = products.FirstOrDefault(p => p.Id == id);
+            if (product != null)
             {
               products.Remove(product);
             }
