@@ -4,6 +4,8 @@ namespace MvcDebuggingExam.Models
 {
     public class Product
     {
+        internal static int id;
+
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Product name is required")]

@@ -12,6 +12,7 @@ namespace MvcDebuggingExam.Controllers
             new Product { Id = 2, Name = "Mouse", Description = "Wireless Mouse", Price = 29.99m, Category = "Electronics" },
             new Product { Id = 3, Name = "Keyboard", Description = "Mechanical Keyboard", Price = 79.99m, Category = "Electronics" }
         };
+        private object _context;
 
         public IActionResult Index()
         {
@@ -28,6 +29,25 @@ namespace MvcDebuggingExam.Controllers
             return View(product);
         }
 
+        [HttpPost]
+        public IActionResult Details(int id, Product product)
+        {
+            var existingProduct = products.FirstOrDefault(p => p.Id == id);
+            if (existingProduct == null)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                existingProduct.Name = product.Name;
+                existingProduct.Description = product.Description;
+                existingProduct.Price = product.Price;
+                existingProduct.Category = product.Category;
+                return RedirectToAction(nameof(Index));
+            }
+            return View(product);
+        }
         public IActionResult Create()
         {
             return View();
@@ -84,9 +104,10 @@ namespace MvcDebuggingExam.Controllers
             var product = products.FirstOrDefault(p => p.Id == productId);
             if (product != null)
             {
-                products.Remove(product);
+              products.Remove(product);
             }
             return RedirectToAction(nameof(Index));
+           
         }
 
         public IActionResult DeleteConfirmed(int id)
