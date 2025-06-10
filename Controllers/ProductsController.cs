@@ -98,11 +98,11 @@ namespace MvcDebuggingExam.Controllers
             return View(product);
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Delete(int productId)
         {
             var product = products.FirstOrDefault(p => p.Id == productId);
-            if (product != null)
+            if (product == null)
             {
               products.Remove(product);
             }
